@@ -3,33 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Samsung Scientific</title>
+    <title>Calculator</title>
     <style>
         body { background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; font-family: sans-serif; }
-        .calc-body { background: #000; width: 100%; max-width: 360px; padding: 10px; box-sizing: border-box; }
+        .calc-body { background: #000; width: 100%; max-width: 360px; padding: 15px; box-sizing: border-box; }
         
-        /* High-set display for that mobile look */
         #display { 
             width: 100%; height: 160px; font-size: 56px; text-align: right; 
             border: none; background: transparent; color: #fff; outline: none; 
             padding: 20px 10px; margin-bottom: 10px;
         }
 
-        /* 4-Column Grid exactly like the photo */
         .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
 
         button { 
-            height: 72px; font-size: 19px; border: none; border-radius: 50px; cursor: pointer; 
-            background: #1a1a1a; color: #eee; transition: 0.1s; display: flex; align-items: center; justify-content: center;
+            height: 72px; font-size: 20px; border: none; border-radius: 50px; cursor: pointer; 
+            background: #1a1a1a; transition: 0.1s; display: flex; align-items: center; justify-content: center;
         }
         button:active { background: #333; }
 
-        /* Specific Button Colors */
-        .sci { color: #888; font-size: 16px; } /* Gray for top-tier math */
-        .op { color: #60a5fa; font-size: 26px; } /* Blue for math symbols */
-        .ac { color: #f87171; } /* Red for the Clear button */
-        .eq { background: #1e3a2e; color: #fff; font-size: 30px; } /* Green background for equals */
+        /* Number buttons = White */
+        .num { color: #ffffff; }
+
+        /* All other function/operator buttons = Blue */
+        .blue-btn { color: #60a5fa; }
         
+        /* Special case for AC and Equals to match Samsung's distinct feel */
+        .ac { color: #f87171; } 
+        .eq { background: #1e3a2e; color: #fff; font-size: 30px; } 
+
         .active-rad { color: #10b981 !important; }
     </style>
 </head>
@@ -39,49 +41,49 @@
     <input type="text" id="display" placeholder="0" readonly>
 
     <div class="grid">
-        <button class="sci" onclick="add('**-1')">⇋</button>
-        <button class="sci" id="modeBtn" onclick="toggleMode()">Rad</button>
-        <button class="sci" onclick="math('sqrt')">√</button>
-        <button class="sci" onclick="math('abs')">|x|</button>
+        <button class="blue-btn" onclick="add('**-1')">⇋</button>
+        <button class="blue-btn" id="modeBtn" onclick="toggleMode()">Rad</button>
+        <button class="blue-btn" onclick="math('sqrt')">√</button>
+        <button class="blue-btn" onclick="math('abs')">|x|</button>
 
-        <button class="sci" onclick="math('sin')">sin</button>
-        <button class="sci" onclick="math('cos')">cos</button>
-        <button class="sci" onclick="math('tan')">tan</button>
-        <button class="sci" onclick="math('pi')">π</button>
+        <button class="blue-btn" onclick="math('sin')">sin</button>
+        <button class="blue-btn" onclick="math('cos')">cos</button>
+        <button class="blue-btn" onclick="math('tan')">tan</button>
+        <button class="blue-btn" onclick="math('pi')">π</button>
 
-        <button class="sci" onclick="math('ln')">ln</button>
-        <button class="sci" onclick="math('log')">log</button>
-        <button class="sci" onclick="math('inv')">1/x</button>
-        <button class="sci" onclick="math('e')">e</button>
+        <button class="blue-btn" onclick="math('ln')">ln</button>
+        <button class="blue-btn" onclick="math('log')">log</button>
+        <button class="blue-btn" onclick="math('inv')">1/x</button>
+        <button class="blue-btn" onclick="math('e')">e</button>
 
-        <button class="sci" onclick="math('exp')">eˣ</button>
-        <button class="sci" onclick="math('pow2')">x²</button>
-        <button class="sci" onclick="add('**')">xʸ</button>
-        <button class="sci" onclick="del()">⌫</button>
+        <button class="blue-btn" onclick="math('exp')">eˣ</button>
+        <button class="blue-btn" onclick="math('pow2')">x²</button>
+        <button class="blue-btn" onclick="add('**')">xʸ</button>
+        <button class="blue-btn" onclick="del()">⌫</button>
 
         <button class="ac" onclick="clr()">C</button>
-        <button class="sci" onclick="add('(')">( )</button>
-        <button class="op" onclick="add('%')">%</button>
-        <button class="op" onclick="add('/')">÷</button>
+        <button class="blue-btn" onclick="add('(')">( )</button>
+        <button class="blue-btn" onclick="add('%')">%</button>
+        <button class="blue-btn" onclick="add('/')">÷</button>
 
-        <button onclick="add('7')">7</button>
-        <button onclick="add('8')">8</button>
-        <button onclick="add('9')">9</button>
-        <button class="op" onclick="add('*')">×</button>
+        <button class="num" onclick="add('7')">7</button>
+        <button class="num" onclick="add('8')">8</button>
+        <button class="num" onclick="add('9')">9</button>
+        <button class="blue-btn" onclick="add('*')">×</button>
 
-        <button onclick="add('4')">4</button>
-        <button onclick="add('5')">5</button>
-        <button onclick="add('6')">6</button>
-        <button class="op" onclick="add('-')">−</button>
+        <button class="num" onclick="add('4')">4</button>
+        <button class="num" onclick="add('5')">5</button>
+        <button class="num" onclick="add('6')">6</button>
+        <button class="blue-btn" onclick="add('-')">−</button>
 
-        <button onclick="add('1')">1</button>
-        <button onclick="add('2')">2</button>
-        <button onclick="add('3')">3</button>
-        <button class="op" onclick="add('+')">+</button>
+        <button class="num" onclick="add('1')">1</button>
+        <button class="num" onclick="add('2')">2</button>
+        <button class="num" onclick="add('3')">3</button>
+        <button class="blue-btn" onclick="add('+')">+</button>
 
-        <button onclick="math('plusMinus')">+/-</button>
-        <button onclick="add('0')">0</button>
-        <button onclick="add('.')">.</button>
+        <button class="blue-btn" onclick="math('plusMinus')">+/-</button>
+        <button class="num" onclick="add('0')">0</button>
+        <button class="num" onclick="add('.')">.</button>
         <button class="eq" onclick="solve()">=</button>
     </div>
 </div>
